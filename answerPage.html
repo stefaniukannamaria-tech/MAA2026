@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Answer Page</title>
+
+      <style>
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Arial, sans-serif;
+        /* colorful background */
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 35%, #fbc2eb 65%, #a6c1ee 100%);
+      }
+        .answer-container {
+            background: rgba(255, 123, 156, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 320px;
+        }
+           h2 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        font-size: 1.8rem;
+        line-height: 1.35;
+        word-wrap: break-word;
+      }
+      #result {
+        white-space: pre-line;
+      }
+    </style>    
+
+</head>
+<body>
+    <div class="answer-container">
+    <h2 id="result-title">測驗結果</h2>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    const profiles = {
+      a: {
+        title: "龐克公主（A型）",
+        description: "關鍵字：風格、反叛、強烈表達\n你不是在創作，你是在「宣告存在」。\n你很在意視覺與風格，討厭平庸。\n你的作品通常帶有衝突、對抗或態度。\n✦ 優點\n風格鮮明，很容易被記住\n有爆發力與感染力\n✦ 陰影\n容易為了「酷」而失去內容\n對無聊的東西極度不耐\n✦ 創作武器\n噴漆罐:我就是自由"
+      },
+      b: {
+        title: "粉嫩公主（B型）",
+        description: "關鍵字：情感、共鳴、細膩\n你在創作的其實是「感覺」。\n你很擅長捕捉情緒、關係與細節，\n作品常讓人覺得被理解。\n✦ 優點\n情感真實，很打動人\n很有故事感\n✦ 陰影\n容易過度自我消耗\n有時會陷入情緒而停滯\n✦ 創作武器\n羽毛筆:情感是內心的根本"
+      },
+      c: {
+        title: "理性公主（C型）",
+        description: "關鍵字：結構、概念、思考\n你不是在創作作品，你在設計「系統」。\n你會思考主題、隱喻與邏輯，\n作品常有深度與架構。\n✦ 優點\n概念強，耐看\n有長期發展潛力\n✦ 陰影\n容易過度思考而卡住\n可能缺乏情感溫度\n✦ 創作武器\n尺規工具:我只相信科學"
+      },
+      d: {
+        title: "混沌公主（D型）",
+        description: "關鍵字：自由、直覺、不可預測\n你不是在創作，你在「生成」。\n你靠直覺、亂試與意外，\n很多作品是「做出來才知道是什麼」。\n✦ 優點\n超有創意與突破性\n容易做出新東西\n✦ 陰影\n不穩定、容易半途而廢\n難以收斂與完成\n✦ 創作武器\n六面骰子:交給命運吧"
+      }
+    };
+
+    function getDominantType(orderedAnswers) {
+      const counts = { a: 0, b: 0, c: 0, d: 0 };
+
+      orderedAnswers.forEach((answer) => {
+        if (counts[answer] !== undefined) {
+          counts[answer] += 1;
+        }
+      });
+
+      const maxCount = Math.max(counts.a, counts.b, counts.c, counts.d);
+      const tied = Object.keys(counts).filter((k) => counts[k] === maxCount);
+
+      if (tied.length === 1) {
+        return tied[0];
+      }
+
+      // Tie-breaker: use the most recent answer among tied types.
+      for (let i = orderedAnswers.length - 1; i >= 0; i--) {
+        if (tied.includes(orderedAnswers[i])) {
+          return orderedAnswers[i];
+        }
+      }
+
+      return "c";
+    }
+
+    function showResult() {
+      const titleEl = document.getElementById("result-title");
+      const resultEl = document.getElementById("result");
+      const savedAnswers = JSON.parse(sessionStorage.getItem("quizAnswers")) || {};
+
+      const orderedAnswers = [];
+      for (let i = 1; i <= 10; i++) {
+        const answer = savedAnswers[i];
+        if (!answer) {
+          titleEl.textContent = "尚未完成測驗";
+          resultEl.textContent = "請先完成 10 題後再查看結果。";
+          return;
+        }
+        orderedAnswers.push(answer);
+      }
+
+      const dominantType = getDominantType(orderedAnswers);
+      window.location.replace(`answer${dominantType}.html`);
+    }
+
+    showResult();
+  </script> 
+
+</body>
+</html>

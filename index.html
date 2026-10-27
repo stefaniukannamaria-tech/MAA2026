@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1</title>
+
+      <style>
+        .scene {
+  position: relative;
+  width: min(92vw, 900px);
+  height: 520px;
+}
+
+/* keep your quiz box above most images */
+.quiz-container {
+  position: relative;
+  z-index: 20;
+}
+
+/* reusable style for all PNGs */
+.pgn {
+  position: absolute;
+  width: var(--w, 220px);     /* optional per-image size */
+  left: var(--x, 0vw);        /* horizontal position */
+  top: var(--y, 0vh);         /* vertical position */
+  z-index: var(--z, 1);       /* overlap order: higher = on top */
+  transform: rotate(var(--r, 0deg));
+  pointer-events: none;       /* images won't block button clicks */
+}
+      :root {
+        --submit-bg: #ed4977;
+        --submit-text: #ffffff;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Arial, sans-serif;
+        /* colorful background */
+        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 35%, #fbc2eb 65%, #a6c1ee 100%);
+      }
+        .quiz-container {
+            background: rgba(255, 123, 156, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 320px;
+        }
+           h2 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        font-size: 1.8rem;
+        line-height: 1.35;
+        word-wrap: break-word;
+      }
+       
+        #submit-btn {
+            background: var(--submit-bg);
+            color: var(--submit-text);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+    </style>    
+
+</head>
+<body>
+  <div class="scene">
+  <img class="pgn" src="images/pink.png"
+      style="--x: -16vw; --y: 30vw; --z: 8; --w: 70vw; --r: -6deg;"
+       alt="decor 1">
+
+  <img class="pgn" src="images/purple.png"
+      style="--x: 43vw; --y: 30vw; --z: 8; --w: 70vw; --r: 4deg;"
+       alt="decor 2">
+
+  <img class="pgn" src="images/pink.png"
+      style="--x: 30vw; --y: 5vw; --z: 5; --w: 70vw; --r: -2deg;"
+       alt="decor 3">
+
+  <img class="pgn" src="images/purple.png"
+      style="--x: -6vw; --y: 5vw; --z: 5; --w: 70vw; --r: 7deg;"
+       alt="decor 4">
+
+</div>
+    <div class="quiz-container">
+    <h2> 故事開始你站在門半開著的城堡前，即將開啟一場冒險……</h2>
+   
+    <button id="submit-btn" onclick="nextPage(1, 'openingPage.html')">開始</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function nextPage(questionNumber, nextPage) {
+      
+    window.location.href = nextPage;  
+    } 
+  </script> 
+
+</body>
+</html>

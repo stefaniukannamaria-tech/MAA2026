@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#ffffff">
+	<title>龐克公主（A型）</title>
+	<style>
+		:root {
+			--ink: #28242a;
+			--accent: #ed4977;
+		}
+		body {
+			min-height: 100vh;
+			margin: 0;
+			overflow: hidden;
+			background-color: #fff;
+		}
+
+/* Main container */
+.container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Background image */
+.background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 0;
+}
+
+.actions {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+/* Shared button settings */
+.button {
+    position: absolute;
+    cursor: pointer;
+}
+
+/* ===== REGULAR BUTTONS ===== */
+
+#button1 {
+    left: 30vw;
+    top: 85vh;
+    width: 15vw;
+}
+
+#share-button {
+	 left: 55vw;
+    top: 85vh;
+    width: 15vw;
+    padding: 0;
+    border: 0;
+    background: transparent;
+}
+
+#share-button img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+	</style>
+</head>
+<body>
+	<main class="container">
+		<img class="background" src="images/princessc.png" alt="">
+        <nav class="actions" aria-label="結果操作">
+			<a class="button" href="openingPage.html"></a>
+			<img src="images/returnc.png"
+			id="button1"
+             class="button">
+			<button class="button button-primary" type="button" id="share-button">
+				<img src="images/sharec.png" alt="分享給朋友">
+			</button>
+		</nav>
+		<p id="share-status" aria-live="polite"></p>
+	</main>
+
+	<script>
+		const shareStatus = document.getElementById("share-status");
+
+		document.getElementById("share-button").addEventListener("click", async () => {
+			const shareData = {
+				title: document.title,
+				text: "我完成了城堡創作氣質測驗，來看看你的結果！",
+				url: window.location.href
+			};
+
+			if (navigator.share) {
+				try {
+					await navigator.share(shareData);
+				} catch (error) {
+					if (error.name !== "AbortError") {
+						shareStatus.textContent = "分享未完成，請複製網址列的連結分享。";
+					}
+				}
+				return;
+			}
+
+			try {
+				await navigator.clipboard.writeText(shareData.url);
+				shareStatus.textContent = "連結已複製，可以傳給朋友。";
+			} catch {
+				shareStatus.textContent = "請複製網址列的連結分享給朋友。";
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1</title>
+
+      <style>
+/* overlay layer for decorative PNGs */
+.scene {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+        /* keep your quiz box above most images */
+.quiz-container {
+  margin-top: clamp(64px, 35vh, 800px);
+  position: relative;
+  z-index: 20;
+}
+
+/* reusable style for all PNGs */
+.pgn {
+  position: absolute;
+  width: var(--w, clamp(80px, 25vw, 180px));
+  left: 50vw;
+  top: var(--top, 2vh);
+  z-index: var(--z, 1);       /* overlap order: higher = on top */
+  transform: translateX(-50%) rotate(var(--r, 0deg));
+  pointer-events: none;       /* images won't block button clicks */
+}
+      :root {
+        /* easy color controls */
+        --answer-bg: #84d895;
+        --answer-text: #4c205b;
+        --answer-border: #ffffff;
+        --answer-selected: #ff62fa;
+
+        --submit-bg: #ed4977;
+        --submit-text: #ffffff;
+        --submit-disabled: #bb78c7;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: Arial, sans-serif;
+        background: #ffffff;
+      }
+        .quiz-container {
+            background: rgba(255, 123, 156, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            text-align: center;
+            width: 320px;
+        }
+           h2 {
+        margin-top: 0;
+        margin-bottom: 18px;
+        font-size: 1.8rem;
+        line-height: 1.35;
+        word-wrap: break-word;
+      }
+        .answer-btn {
+            background: var(--answer-bg);
+            color: var(--answer-text);
+            border: 1px solid var(--answer-border);
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin: 5px 0;
+            cursor: pointer;
+            width: 100%;
+        }
+        .answer-btn.selected {
+            background: var(--answer-selected);
+        }
+        #submit-btn {
+            background: var(--submit-bg);
+            color: var(--submit-text);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+        #submit-btn:disabled {
+            background: var(--submit-disabled);
+            cursor: not-allowed;
+        }
+    </style>    
+
+</head>
+<body>
+   <div class="scene">
+  <img class="pgn" src="images/questions/01.png"
+  style="--top: -3vh; --z: 5; --w: clamp(80px, 70vw, 800px); --r: 0deg;"
+       alt="decor 1">
+</div>
+    <div class="quiz-container">
+    <h2> 你推開門的瞬間，你第一個注意到的是？</h2
+
+    <button class="answer-btn" onclick="selectAnswer('a', this)">牆上的塗鴉與破損</button>
+    <button class="answer-btn" onclick="selectAnswer('b', this)">空氣裡殘留的某種情緒</button>
+    <button class="answer-btn" onclick="selectAnswer('c', this)">空間的結構與對稱</button>
+    <button class="answer-btn" onclick="selectAnswer('d', this)">光影的移動變換</button>
+   
+    <button id="submit-btn" onclick="submitAnswer(1, 'question2.html')" disabled>下一個</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    let currentSelection = null;
+
+    function selectAnswer(value, btn)   
+    {
+   currentSelection = value;
+
+    // optional visual state
+    document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+
+    document.getElementById('submit-btn').disabled = false;
+    }
+
+    function submitAnswer(questionNumber, nextPage) {
+       if (!currentSelection) return;
+
+    const savedAnswers = JSON.parse(sessionStorage.getItem('quizAnswers')) || {};
+    savedAnswers[questionNumber] = currentSelection;
+    sessionStorage.setItem('quizAnswers', JSON.stringify(savedAnswers));
+
+    window.location.href = nextPage;  
+    } 
+  </script> 
+
+</body>
+</html>
