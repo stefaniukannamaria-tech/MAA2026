@@ -23,13 +23,12 @@
 
 /* reusable style for all PNGs */
 .pgn {
-  position: absolute;
-  width: var(--w, clamp(80px, 25vw, 180px));
-  left: 50vw;
-  top: var(--top, 2vh);
-  z-index: var(--z, 1);       /* overlap order: higher = on top */
-  transform: translateX(-50%) rotate(var(--r, 0deg));
-  pointer-events: none;       /* images won't block button clicks */
+ position: absolute;
+  width: 90vw;
+  left: 5vw;
+  top: var(--top, 0vh);
+  z-index: var(--z, 1);   
+  pointer-events: none;     
 }
       :root {
         /* easy color controls */
