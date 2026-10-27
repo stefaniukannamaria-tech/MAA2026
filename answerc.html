@@ -50,6 +50,12 @@
     width: 15vw;
 }
 
+#button1 img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
 #share-button {
 	 left: 55vw;
     top: 92vh;
@@ -70,10 +76,9 @@
 	<main class="container">
 		<img class="background" src="images/princessc.png" alt="">
         <nav class="actions" aria-label="結果操作">
-			<a class="button" href="index.html"></a>
-			<img src="images/returnc.png"
-			id="button1"
-             class="button">
+			<a class="button" href="index.html" id="button1" aria-label="返回首頁">
+				<img src="images/returnc.png" alt="">
+			</a>
 			<button class="button button-primary" type="button" id="share-button">
 				<img src="images/sharec.png" alt="分享給朋友">
 			</button>
