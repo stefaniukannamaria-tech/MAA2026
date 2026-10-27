@@ -7,7 +7,7 @@
 
       <style>
       :root {
-        --submit-bg: #ed4977;
+        --submit-bg: #726290;
         --submit-text: #ffffff;
       }
 
@@ -19,11 +19,24 @@
         display: grid;
         place-items: center;
         font-family: Arial, sans-serif;
-        /* colorful background */
-        background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 35%, #fbc2eb 65%, #a6c1ee 100%);
+        background: #ffffff;;
+
+      }
+      .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: auto;
+        z-index: 0;
+        pointer-events: none;
       }
         .quiz-container {
-            background: rgba(255, 123, 156, 0.9);
+            position: relative;
+            z-index: 1;
+            top: 75vh;
+            background: rgba(224, 181, 192, 0.9);
             padding: 30px;
             border-radius: 12px;
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
@@ -52,6 +65,7 @@
 
 </head>
 <body>
+  <img class="background" src="images/opening.png" alt="">
     <div class="quiz-container">
     <h2> 故事開始你站在門半開著的城堡前，即將開啟一場冒險……</h2>
    
